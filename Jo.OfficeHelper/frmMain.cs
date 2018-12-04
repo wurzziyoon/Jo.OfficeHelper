@@ -12,6 +12,8 @@ using static Jo.OfficeHelper.Business.CommonBiz;
 using System.Diagnostics;
 using Jo.OfficeHelper.Business;
 using System.Runtime.InteropServices;
+using Jo.OfficeHelper.DTO;
+using System.Configuration;
 
 namespace Jo.OfficeHelper
 {
@@ -54,13 +56,15 @@ namespace Jo.OfficeHelper
 
         private void InitQuickHide(int margin)
         {
+            tabQuickHidePage.Controls.Clear();
             int height = margin;
             List<string> tmpProcess = new List<string>();
+            ProcessHelper helper = ProcessHelper.GetInstance();
             foreach (Process p in Process.GetProcesses().OrderBy((t) => { return t.ProcessName; }))
             {
                 CheckBox ckb = new CheckBox();
                 if (!tmpProcess.Contains(p.ProcessName))
-                {
+                {                    
                     tmpProcess.Add(p.ProcessName);
                     ckb.Name = p.ProcessName.ToString();
                     ckb.Text = p.ProcessName;
@@ -69,11 +73,21 @@ namespace Jo.OfficeHelper
                     ckb.Click += (ckbSender, ckbE) =>
                     {
                         CheckBox tmp = ckbSender as CheckBox;
-                        ProcessHelper.GetInstance().AddProcess(tmp.Text);
-                        //MessageBox.Show(tmp.Text);
-                        //TODO:添加事件
+                        if (tmp.Checked)
+                        {
+                            ProcessHelper.GetInstance().AddProcess(tmp.Text);
+                        }
+                        else
+                        {
+                            ProcessHelper.GetInstance().RemoveProcess(tmp.Text);
+                        }
+                        
                     };
-                    ckb.Width = tabQuickHidePage.Width - margin * 4;
+                    ckb.AutoSize = true;
+                    if (helper.GetQuickHideProcessList().Where(t => t == p.ProcessName).FirstOrDefault() != null)
+                    {
+                        ckb.Checked = true;
+                    }
                     tabQuickHidePage.Controls.Add(ckb);
                     height += margin + ckb.Height;
                 }
@@ -83,7 +97,7 @@ namespace Jo.OfficeHelper
         private void btnPickColorState_Click(object sender, EventArgs e)
         {
             ColorPickerBiz biz = ColorPickerBiz.GetInstance();
-            if (btnPickColorState.Text == "开始")
+            if (btnPickColorState.Text == "Start")
             {
                 biz.OnGetColorFinished += (color) =>
                 {
@@ -100,7 +114,7 @@ namespace Jo.OfficeHelper
                 lblColorRGB.Text = "RGB:";
                 lblColorReview.BackColor = Color.Transparent;
             }
-            btnPickColorState.Text = btnPickColorState.Text == "开始" ? "结束" : "开始";
+            btnPickColorState.Text = btnPickColorState.Text == "Start" ? "Stop" : "Start";
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -153,6 +167,22 @@ namespace Jo.OfficeHelper
         private void frmMain_Shown(object sender, EventArgs e)
         {
             int i = RegisterHotKey((int)Process.GetCurrentProcess().MainWindowHandle, 0x23434, 2, 119);
+        }
+
+        private void tabQuickHidePage_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {               
+                contextMenuStrip.Show();
+            }
+        }
+
+        private void contextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Refresh")
+            {
+                InitQuickHide(CONTROL_MARGIN);
+            }
         }
     }
 }

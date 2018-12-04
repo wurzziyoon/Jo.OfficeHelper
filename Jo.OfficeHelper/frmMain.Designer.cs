@@ -31,120 +31,125 @@
             this.components = new System.ComponentModel.Container();
             this.tab = new System.Windows.Forms.TabControl();
             this.tabQuickHidePage = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblColorReview = new System.Windows.Forms.Label();
-            this.lblColorRGB = new System.Windows.Forms.Label();
-            this.lblColorHEX = new System.Windows.Forms.Label();
+            this.tabColorPicker = new System.Windows.Forms.TabPage();
             this.btnPickColorState = new System.Windows.Forms.Button();
+            this.lblColorHEX = new System.Windows.Forms.Label();
+            this.lblColorRGB = new System.Windows.Forms.Label();
+            this.lblColorReview = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabSettings = new System.Windows.Forms.TabPage();
             this.cbxKeepAwake = new System.Windows.Forms.CheckBox();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemRefresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabConfigUpdater = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.tab.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.tabColorPicker.SuspendLayout();
+            this.tabSettings.SuspendLayout();
+            this.contextMenuStrip.SuspendLayout();
+            this.tabConfigUpdater.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab
             // 
             this.tab.Controls.Add(this.tabQuickHidePage);
-            this.tab.Controls.Add(this.tabPage2);
-            this.tab.Controls.Add(this.tabPage3);
+            this.tab.Controls.Add(this.tabColorPicker);
+            this.tab.Controls.Add(this.tabConfigUpdater);
+            this.tab.Controls.Add(this.tabSettings);
             this.tab.Location = new System.Drawing.Point(0, -3);
             this.tab.Name = "tab";
             this.tab.SelectedIndex = 0;
-            this.tab.Size = new System.Drawing.Size(608, 402);
+            this.tab.Size = new System.Drawing.Size(457, 402);
             this.tab.TabIndex = 0;
             // 
             // tabQuickHidePage
             // 
             this.tabQuickHidePage.AutoScroll = true;
+            this.tabQuickHidePage.ContextMenuStrip = this.contextMenuStrip;
             this.tabQuickHidePage.Location = new System.Drawing.Point(4, 22);
             this.tabQuickHidePage.Name = "tabQuickHidePage";
             this.tabQuickHidePage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabQuickHidePage.Size = new System.Drawing.Size(600, 376);
+            this.tabQuickHidePage.Size = new System.Drawing.Size(449, 376);
             this.tabQuickHidePage.TabIndex = 0;
             this.tabQuickHidePage.Text = "Quick Hide";
             this.tabQuickHidePage.UseVisualStyleBackColor = true;
+            this.tabQuickHidePage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tabQuickHidePage_MouseUp);
             // 
-            // tabPage2
+            // tabColorPicker
             // 
-            this.tabPage2.Controls.Add(this.btnPickColorState);
-            this.tabPage2.Controls.Add(this.lblColorHEX);
-            this.tabPage2.Controls.Add(this.lblColorRGB);
-            this.tabPage2.Controls.Add(this.lblColorReview);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(600, 376);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Color Picker";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabColorPicker.Controls.Add(this.btnPickColorState);
+            this.tabColorPicker.Controls.Add(this.lblColorHEX);
+            this.tabColorPicker.Controls.Add(this.lblColorRGB);
+            this.tabColorPicker.Controls.Add(this.lblColorReview);
+            this.tabColorPicker.Controls.Add(this.label1);
+            this.tabColorPicker.Location = new System.Drawing.Point(4, 22);
+            this.tabColorPicker.Name = "tabColorPicker";
+            this.tabColorPicker.Padding = new System.Windows.Forms.Padding(3);
+            this.tabColorPicker.Size = new System.Drawing.Size(449, 376);
+            this.tabColorPicker.TabIndex = 1;
+            this.tabColorPicker.Text = "Color Picker";
+            this.tabColorPicker.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // btnPickColorState
             // 
-            this.tabPage3.Controls.Add(this.cbxKeepAwake);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(600, 376);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Settings";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // notifyIcon
-            // 
-            this.notifyIcon.Text = "OfficeHelper";
-            this.notifyIcon.Visible = true;
-            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(193, 63);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Color:";
-            // 
-            // lblColorReview
-            // 
-            this.lblColorReview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblColorReview.Location = new System.Drawing.Point(259, 52);
-            this.lblColorReview.Name = "lblColorReview";
-            this.lblColorReview.Size = new System.Drawing.Size(110, 29);
-            this.lblColorReview.TabIndex = 1;
-            // 
-            // lblColorRGB
-            // 
-            this.lblColorRGB.AutoSize = true;
-            this.lblColorRGB.Location = new System.Drawing.Point(205, 105);
-            this.lblColorRGB.Name = "lblColorRGB";
-            this.lblColorRGB.Size = new System.Drawing.Size(29, 12);
-            this.lblColorRGB.TabIndex = 2;
-            this.lblColorRGB.Text = "RGB:";
+            this.btnPickColorState.Location = new System.Drawing.Point(189, 241);
+            this.btnPickColorState.Name = "btnPickColorState";
+            this.btnPickColorState.Size = new System.Drawing.Size(75, 23);
+            this.btnPickColorState.TabIndex = 4;
+            this.btnPickColorState.Text = "Start";
+            this.btnPickColorState.UseVisualStyleBackColor = true;
+            this.btnPickColorState.Click += new System.EventHandler(this.btnPickColorState_Click);
             // 
             // lblColorHEX
             // 
             this.lblColorHEX.AutoSize = true;
-            this.lblColorHEX.Location = new System.Drawing.Point(205, 155);
+            this.lblColorHEX.Location = new System.Drawing.Point(161, 162);
             this.lblColorHEX.Name = "lblColorHEX";
             this.lblColorHEX.Size = new System.Drawing.Size(29, 12);
             this.lblColorHEX.TabIndex = 3;
             this.lblColorHEX.Text = "HEX:";
             // 
-            // btnPickColorState
+            // lblColorRGB
             // 
-            this.btnPickColorState.Location = new System.Drawing.Point(259, 234);
-            this.btnPickColorState.Name = "btnPickColorState";
-            this.btnPickColorState.Size = new System.Drawing.Size(75, 23);
-            this.btnPickColorState.TabIndex = 4;
-            this.btnPickColorState.Text = "开始";
-            this.btnPickColorState.UseVisualStyleBackColor = true;
-            this.btnPickColorState.Click += new System.EventHandler(this.btnPickColorState_Click);
+            this.lblColorRGB.AutoSize = true;
+            this.lblColorRGB.Location = new System.Drawing.Point(161, 112);
+            this.lblColorRGB.Name = "lblColorRGB";
+            this.lblColorRGB.Size = new System.Drawing.Size(29, 12);
+            this.lblColorRGB.TabIndex = 2;
+            this.lblColorRGB.Text = "RGB:";
+            // 
+            // lblColorReview
+            // 
+            this.lblColorReview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblColorReview.Location = new System.Drawing.Point(215, 59);
+            this.lblColorReview.Name = "lblColorReview";
+            this.lblColorReview.Size = new System.Drawing.Size(110, 29);
+            this.lblColorReview.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(101, 69);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Color Perview:";
+            // 
+            // tabSettings
+            // 
+            this.tabSettings.Controls.Add(this.cbxKeepAwake);
+            this.tabSettings.Location = new System.Drawing.Point(4, 22);
+            this.tabSettings.Name = "tabSettings";
+            this.tabSettings.Size = new System.Drawing.Size(449, 376);
+            this.tabSettings.TabIndex = 2;
+            this.tabSettings.Text = "Settings";
+            this.tabSettings.UseVisualStyleBackColor = true;
             // 
             // cbxKeepAwake
             // 
+            this.cbxKeepAwake.AccessibleDescription = "";
+            this.cbxKeepAwake.AccessibleName = "";
             this.cbxKeepAwake.Checked = true;
             this.cbxKeepAwake.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbxKeepAwake.Location = new System.Drawing.Point(20, 16);
@@ -155,11 +160,50 @@
             this.cbxKeepAwake.UseVisualStyleBackColor = true;
             this.cbxKeepAwake.CheckedChanged += new System.EventHandler(this.cbxKeepAwake_CheckedChanged);
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Text = "OfficeHelper";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemRefresh});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(121, 26);
+            this.contextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip_ItemClicked);
+            // 
+            // menuItemRefresh
+            // 
+            this.menuItemRefresh.Name = "menuItemRefresh";
+            this.menuItemRefresh.Size = new System.Drawing.Size(120, 22);
+            this.menuItemRefresh.Text = "Refresh";
+            // 
+            // tabConfigUpdater
+            // 
+            this.tabConfigUpdater.Controls.Add(this.button1);
+            this.tabConfigUpdater.Location = new System.Drawing.Point(4, 22);
+            this.tabConfigUpdater.Name = "tabConfigUpdater";
+            this.tabConfigUpdater.Size = new System.Drawing.Size(449, 376);
+            this.tabConfigUpdater.TabIndex = 3;
+            this.tabConfigUpdater.Text = "Config Updater";
+            this.tabConfigUpdater.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(141, 189);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(166, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Invoke";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 396);
+            this.ClientSize = new System.Drawing.Size(454, 396);
             this.Controls.Add(this.tab);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
@@ -169,9 +213,11 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Shown += new System.EventHandler(this.frmMain_Shown);
             this.tab.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
+            this.tabColorPicker.ResumeLayout(false);
+            this.tabColorPicker.PerformLayout();
+            this.tabSettings.ResumeLayout(false);
+            this.contextMenuStrip.ResumeLayout(false);
+            this.tabConfigUpdater.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -180,14 +226,18 @@
 
         private System.Windows.Forms.TabControl tab;
         private System.Windows.Forms.TabPage tabQuickHidePage;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabColorPicker;
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabSettings;
         private System.Windows.Forms.Button btnPickColorState;
         private System.Windows.Forms.Label lblColorHEX;
         private System.Windows.Forms.Label lblColorRGB;
         private System.Windows.Forms.Label lblColorReview;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox cbxKeepAwake;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem menuItemRefresh;
+        private System.Windows.Forms.TabPage tabConfigUpdater;
+        private System.Windows.Forms.Button button1;
     }
 }

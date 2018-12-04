@@ -37,6 +37,7 @@
       <HintPath>Resources\MaterialSkin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,10 +54,14 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Business\CommonBiz.cs" />
+    <Compile Include="Business\ConfigUpdaterBiz.cs" />
     <Compile Include="Business\ProcessHelper.cs" />
     <Compile Include="Business\ReleasableClass.cs" />
     <Compile Include="Business\UserConfigBiz.cs" />
     <Compile Include="Business\ColorPickerBiz.cs" />
+    <Compile Include="DTO\ConfigUpdaterConfigDTO.cs" />
+    <Compile Include="DTO\OfficeHelperConfigDTO.cs" />
+    <Compile Include="DTO\ConfigUpdaterConfigCollection.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>

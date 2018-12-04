@@ -17,12 +17,12 @@ namespace Jo.OfficeHelper.Business
         );
         private ProcessHelper()
         {
-            m_processList = new List<Process>();
+            m_processNameList = new List<string>();
         }
         private static object m_lockObj = new object();
         private static ProcessHelper m_instance;
         private bool m_status = false;
-        private List<Process> m_processList
+        private List<string> m_processNameList
         {
             get;
             set;
@@ -41,38 +41,37 @@ namespace Jo.OfficeHelper.Business
             }
             return m_instance;
         }
-
+        public List<string> GetQuickHideProcessList()
+        {
+            return m_processNameList;
+        }
         public void AddProcess(string name)
         {
-            List<Process> process=Process.GetProcesses().Where((t) => t.ProcessName == name).ToList();
-            foreach (Process p in process)
+            m_processNameList.Add(name);
+            if (m_status)
             {
-                m_processList.Add(p);
-                if (m_status)
-                {
-                    HideProcess(p.Id);
-                }
+                HideProcess(name);
             }
         }
 
         public void RemoveProcess(string name)
         {
-            List<Process> tmp = new List<Process>();
-            foreach (Process p in m_processList)
+            List<string> tmp = new List<string>();
+            foreach (string processName in m_processNameList)
             {
-                if (p.ProcessName != name)
+                if (processName != name)
                 {
-                    tmp.Add(p);
+                    tmp.Add(processName);
                 }
                 else
                 {
                     if (m_status)
                     {
-                        ShowProcess(p.Id);
+                        ShowProcess(processName);
                     }
                 }
             }
-            m_processList = tmp;
+            m_processNameList = tmp;
         }
 
         public void Toggle()
@@ -89,31 +88,47 @@ namespace Jo.OfficeHelper.Business
         public void ShowAllProcess()
         {
             m_status = false;
-            foreach (Process p in m_processList)
+            foreach (string processName in m_processNameList)
             {
-                ShowProcess((int)p.MainWindowHandle);
+                ShowProcess(processName);
             }
         }
-        private void ShowProcess(int hwnd)
+        private void ShowProcess(string processName)
         {
-            ShowWindow(hwnd, 1);
+            List<Process> listProcess = Process.GetProcesses().Where(t => t.ProcessName == processName).ToList();
+            if (listProcess.Count == 0)
+            {
+                m_processNameList.Remove(processName);
+            }
+            foreach (Process p in listProcess)
+            {
+                ShowWindow((int)p.MainWindowHandle, 1);
+            }
         }
         public void HideAllProcess()
         {
             m_status = true;
-            foreach (Process p in m_processList)
+            foreach (string processName in m_processNameList)
             {
-                HideProcess((int)p.MainWindowHandle);
+                HideProcess(processName);
             }
         }
-        private void HideProcess(int hwnd)
+        private void HideProcess(string processName)
         {
-            ShowWindow(hwnd, 0);
+            List<Process> listProcess = Process.GetProcesses().Where(t => t.ProcessName == processName).ToList();
+            if (listProcess.Count == 0)
+            {
+                m_processNameList.Remove(processName);
+            }
+            foreach (Process p in listProcess)
+            {
+                ShowWindow((int)p.MainWindowHandle, 0);
+            }            
         }
 
         public void Dispose()
         {
-            if (m_processList != null && m_processList.Count > 0)
+            if (m_processNameList != null && m_processNameList.Count > 0)
             {
                 ShowAllProcess();
             }
