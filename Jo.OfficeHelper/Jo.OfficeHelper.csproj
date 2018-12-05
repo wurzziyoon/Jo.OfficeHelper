@@ -54,7 +54,8 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Business\CommonBiz.cs" />
-    <Compile Include="Business\ConfigUpdaterBiz.cs" />
+    <Compile Include="Business\ConfigUpdater\ConfigUpdater.cs" />
+    <Compile Include="Business\ConfigUpdater\UpdaterTask.cs" />
     <Compile Include="Business\ProcessHelper.cs" />
     <Compile Include="Business\ReleasableClass.cs" />
     <Compile Include="Business\UserConfigBiz.cs" />
