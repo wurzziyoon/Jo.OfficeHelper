@@ -12,7 +12,7 @@ using System.Diagnostics;
 namespace Jo.OfficeHelper.Business
 {
 
-    public class CommonBiz
+    public static class CommonBiz
     {
         [DllImport("advapi32.dll", EntryPoint = "RegOpenKey")]
         private static extern int RegOpenKey(
@@ -115,6 +115,18 @@ namespace Jo.OfficeHelper.Business
             SetThreadExecutionState(ExecutionFlag.ES_CONTINUOUS);
         }
 
-        
+        public static string ToString(this string str, Encoding toEncoding, Encoding fromEncoding = null)
+        {
+            if (toEncoding == null)
+            {
+                return null;
+            }
+            fromEncoding = fromEncoding ?? Encoding.UTF8;
+            byte[] strBytes = fromEncoding.GetBytes(str);
+            byte[] resultStrBytes = Encoding.Convert(fromEncoding, toEncoding, strBytes);
+            char[] resultStrChars = new char[toEncoding.GetCharCount(resultStrBytes)];
+            toEncoding.GetChars(resultStrBytes, 0, resultStrChars.Length);
+            return new string(resultStrChars);
+        }
     }
 }

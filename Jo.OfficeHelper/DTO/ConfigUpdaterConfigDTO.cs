@@ -110,10 +110,5 @@ namespace Jo.OfficeHelper.DTO
             }
         }
 
-        public Exception UpdateException
-        {
-            get;
-            set;
-        }
     }
 }
