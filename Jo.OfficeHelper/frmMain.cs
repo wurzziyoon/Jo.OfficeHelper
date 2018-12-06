@@ -14,6 +14,7 @@ using Jo.OfficeHelper.Business;
 using System.Runtime.InteropServices;
 using Jo.OfficeHelper.DTO;
 using System.Configuration;
+using Jo.OfficeHelper.Business.ConfigUpdater;
 
 namespace Jo.OfficeHelper
 {
@@ -41,7 +42,7 @@ namespace Jo.OfficeHelper
         }
 
         private void frmMain_Load(object sender, EventArgs e)
-        {            
+        {
             InitQuickHide(CONTROL_MARGIN);
             notifyIcon.Icon = this.Icon;
             if (cbxKeepAwake.Checked)
@@ -183,6 +184,21 @@ namespace Jo.OfficeHelper
             {
                 InitQuickHide(CONTROL_MARGIN);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            richTextLog.Text = "";
+            ConfigUpdater updater = ConfigUpdater.GetInstance();
+            updater.OnError += (updaterException) =>
+            {
+                richTextLog.Text += $"{DateTime.Now}      {updaterException.ToString()}\r\n";
+            };
+            updater.OnTaskFinished += (taskName, isTaskSuccess) =>
+              {
+                  richTextLog.Text += $"{DateTime.Now}      TaskName:{taskName}     Result:update " + (isTaskSuccess ? "successfully!\r\n" : "error!\r\n");
+              };
+            updater.StartUpdating();
         }
     }
 }

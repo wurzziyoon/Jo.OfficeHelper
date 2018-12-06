@@ -36,9 +36,11 @@
     <Reference Include="MaterialSkin">
       <HintPath>Resources\MaterialSkin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.JScript" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,12 +55,12 @@
     <Compile Include="Base\FormBase.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Business\CMDHelper.cs" />
     <Compile Include="Business\CommonBiz.cs" />
     <Compile Include="Business\ConfigUpdater\ConfigUpdater.cs" />
-    <Compile Include="Business\ConfigUpdater\UpdaterTask.cs" />
+    <Compile Include="Business\ConfigUpdater\UpdateTask.cs" />
     <Compile Include="Business\ProcessHelper.cs" />
     <Compile Include="Business\ReleasableClass.cs" />
-    <Compile Include="Business\UserConfigBiz.cs" />
     <Compile Include="Business\ColorPickerBiz.cs" />
     <Compile Include="DTO\ConfigUpdaterConfigDTO.cs" />
     <Compile Include="DTO\OfficeHelperConfigDTO.cs" />

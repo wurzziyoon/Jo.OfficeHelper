@@ -31,24 +31,25 @@
             this.components = new System.ComponentModel.Container();
             this.tab = new System.Windows.Forms.TabControl();
             this.tabQuickHidePage = new System.Windows.Forms.TabPage();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.tabColorPicker = new System.Windows.Forms.TabPage();
             this.btnPickColorState = new System.Windows.Forms.Button();
             this.lblColorHEX = new System.Windows.Forms.Label();
             this.lblColorRGB = new System.Windows.Forms.Label();
             this.lblColorReview = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabConfigUpdater = new System.Windows.Forms.TabPage();
+            this.richTextLog = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.cbxKeepAwake = new System.Windows.Forms.CheckBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuItemRefresh = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabConfigUpdater = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
             this.tab.SuspendLayout();
-            this.tabColorPicker.SuspendLayout();
-            this.tabSettings.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
+            this.tabColorPicker.SuspendLayout();
             this.tabConfigUpdater.SuspendLayout();
+            this.tabSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab
@@ -75,6 +76,20 @@
             this.tabQuickHidePage.Text = "Quick Hide";
             this.tabQuickHidePage.UseVisualStyleBackColor = true;
             this.tabQuickHidePage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tabQuickHidePage_MouseUp);
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemRefresh});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(121, 26);
+            this.contextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip_ItemClicked);
+            // 
+            // menuItemRefresh
+            // 
+            this.menuItemRefresh.Name = "menuItemRefresh";
+            this.menuItemRefresh.Size = new System.Drawing.Size(120, 22);
+            this.menuItemRefresh.Text = "Refresh";
             // 
             // tabColorPicker
             // 
@@ -136,6 +151,36 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Color Perview:";
             // 
+            // tabConfigUpdater
+            // 
+            this.tabConfigUpdater.Controls.Add(this.richTextLog);
+            this.tabConfigUpdater.Controls.Add(this.button1);
+            this.tabConfigUpdater.Location = new System.Drawing.Point(4, 22);
+            this.tabConfigUpdater.Name = "tabConfigUpdater";
+            this.tabConfigUpdater.Size = new System.Drawing.Size(449, 376);
+            this.tabConfigUpdater.TabIndex = 3;
+            this.tabConfigUpdater.Text = "Config Updater";
+            this.tabConfigUpdater.UseVisualStyleBackColor = true;
+            // 
+            // richTextLog
+            // 
+            this.richTextLog.Location = new System.Drawing.Point(18, 14);
+            this.richTextLog.Name = "richTextLog";
+            this.richTextLog.ReadOnly = true;
+            this.richTextLog.Size = new System.Drawing.Size(420, 287);
+            this.richTextLog.TabIndex = 1;
+            this.richTextLog.Text = "";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(145, 307);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(166, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Invoke";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // tabSettings
             // 
             this.tabSettings.Controls.Add(this.cbxKeepAwake);
@@ -166,39 +211,6 @@
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
-            // contextMenuStrip
-            // 
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemRefresh});
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(121, 26);
-            this.contextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip_ItemClicked);
-            // 
-            // menuItemRefresh
-            // 
-            this.menuItemRefresh.Name = "menuItemRefresh";
-            this.menuItemRefresh.Size = new System.Drawing.Size(120, 22);
-            this.menuItemRefresh.Text = "Refresh";
-            // 
-            // tabConfigUpdater
-            // 
-            this.tabConfigUpdater.Controls.Add(this.button1);
-            this.tabConfigUpdater.Location = new System.Drawing.Point(4, 22);
-            this.tabConfigUpdater.Name = "tabConfigUpdater";
-            this.tabConfigUpdater.Size = new System.Drawing.Size(449, 376);
-            this.tabConfigUpdater.TabIndex = 3;
-            this.tabConfigUpdater.Text = "Config Updater";
-            this.tabConfigUpdater.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(141, 189);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(166, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Invoke";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -208,16 +220,17 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.Name = "frmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "OfficeHelper - 你的划水神器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Shown += new System.EventHandler(this.frmMain_Shown);
             this.tab.ResumeLayout(false);
+            this.contextMenuStrip.ResumeLayout(false);
             this.tabColorPicker.ResumeLayout(false);
             this.tabColorPicker.PerformLayout();
-            this.tabSettings.ResumeLayout(false);
-            this.contextMenuStrip.ResumeLayout(false);
             this.tabConfigUpdater.ResumeLayout(false);
+            this.tabSettings.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -239,5 +252,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemRefresh;
         private System.Windows.Forms.TabPage tabConfigUpdater;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox richTextLog;
     }
 }

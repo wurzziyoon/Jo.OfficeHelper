@@ -128,5 +128,11 @@ namespace Jo.OfficeHelper.Business
             toEncoding.GetChars(resultStrBytes, 0, resultStrChars.Length);
             return new string(resultStrChars);
         }
+
+        public static string GetJSResult(this string strJavaScript)
+        {
+            Microsoft.JScript.Vsa.VsaEngine ve = Microsoft.JScript.Vsa.VsaEngine.CreateEngine();
+            return Microsoft.JScript.Eval.JScriptEvaluate(strJavaScript, ve).ToString();
+        }
     }
 }

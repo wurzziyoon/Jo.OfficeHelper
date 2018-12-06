@@ -110,5 +110,6 @@ namespace Jo.OfficeHelper.DTO
             }
         }
 
+        public Exception UpadteException { get; set; }
     }
 }

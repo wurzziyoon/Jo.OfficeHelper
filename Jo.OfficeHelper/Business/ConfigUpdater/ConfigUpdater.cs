@@ -6,16 +6,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jo.OfficeHelper.Business
+namespace Jo.OfficeHelper.Business.ConfigUpdater
 {
-    public class ConfigUpdaterBiz
+    public class ConfigUpdater
     {
-        private static ConfigUpdaterBiz m_instance;
+        private static ConfigUpdater m_instance;
         private static object m_lockObj = new object();
-        private OfficeHelperConfigDTO m_configDTO=null;
-        event Action<Exception> OnError;
-        event Action<List<ConfigUpdaterConfigDTO>> OnFinished;
-        private ConfigUpdaterBiz()
+        private OfficeHelperConfigDTO m_configDTO = null;
+        private event Action<Exception> m_onError;
+        public event Action<Exception> OnError
+        {
+            add
+            {
+                m_onError += value;
+
+            }
+            remove
+            {
+
+                m_onError -= value;
+
+            }
+        }
+        private event Action<string, bool> m_onTaskFinished;
+        public event Action<string, bool> OnTaskFinished
+        {
+            add
+            {
+
+                m_onTaskFinished += value;
+
+            }
+            remove
+            {
+
+                m_onTaskFinished -= value;
+
+            }
+        }
+        private ConfigUpdater()
         {
             try
             {
@@ -23,14 +52,14 @@ namespace Jo.OfficeHelper.Business
             }
             catch (Exception e)
             {
-                if (OnError != null)
+                if (m_onError != null)
                 {
-                    OnError.Invoke(e);
+                    m_onError.Invoke(e);
                 }
             }
         }
 
-        public static ConfigUpdaterBiz GetInstance()
+        public static ConfigUpdater GetInstance()
         {
             if (m_instance == null)
             {
@@ -38,7 +67,7 @@ namespace Jo.OfficeHelper.Business
                 {
                     if (m_instance == null)
                     {
-                        m_instance = new ConfigUpdaterBiz();
+                        m_instance = new ConfigUpdater();
                     }
                 }
             }
@@ -49,27 +78,34 @@ namespace Jo.OfficeHelper.Business
         {
             if (m_configDTO == null)
             {
-                if (OnError != null)
+                if (m_onError != null)
                 {
-                    OnError.Invoke(new Exception("Init config file error!"));
+                    m_onError.Invoke(new Exception("Init config file error!"));
                 }
             }
             else
             {
-                //TODO:添加更新操作
-
-                OnFinished.Invoke(new List<ConfigUpdaterConfigDTO>());   //将更新结果返回
+                foreach (var obj in m_configDTO.OfficeHelperConfig)
+                {
+                    ConfigUpdaterConfigDTO dto = obj as ConfigUpdaterConfigDTO;
+                    UpdateTask task = new UpdateTask(dto);
+                    task.UpdateFinished += (isSuccess) =>
+                      {
+                          if (this.m_onTaskFinished != null)
+                          {
+                              m_onTaskFinished.Invoke(task.Name, isSuccess);
+                          }
+                      };
+                    task.OnError += (e) =>
+                     {
+                         if (this.m_onError != null)
+                         {
+                             m_onError.Invoke(e);
+                         }
+                     };
+                    task.Invoke();
+                }
             }
-        }
-
-        public void RestartService(string serviceName)
-        {
-
-        }
-
-        public void RestartProcessName(string processName)
-        {
-
         }
     }
 }
