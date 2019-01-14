@@ -33,16 +33,21 @@ namespace Jo.OfficeHelper
                 int id
         );
 
+        private string[] m_args = null;
+
+        public string[] StartArgs => m_args;
+
         private const int CONTROL_MARGIN = 10;
-        public frmMain()
+        public frmMain(params string[] args)
         {
+            this.m_args = args;
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
             base.Init(this);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
-        {
+        {            
             InitQuickHide(CONTROL_MARGIN);
             notifyIcon.Icon = this.Icon;
             if (cbxKeepAwake.Checked)
@@ -55,6 +60,16 @@ namespace Jo.OfficeHelper
             }
         }
 
+        private void initArgs()
+        {
+            foreach (string arg in StartArgs)
+            {
+                if (arg.ToLower() == "hidden")
+                {
+                    this.Hide();
+                }
+            }
+        }
         private void InitQuickHide(int margin)
         {
             tabQuickHidePage.Controls.Clear();
@@ -167,6 +182,7 @@ namespace Jo.OfficeHelper
 
         private void frmMain_Shown(object sender, EventArgs e)
         {
+            initArgs();
             int i = RegisterHotKey((int)Process.GetCurrentProcess().MainWindowHandle, 0x23434, 2, 119);
         }
 
@@ -200,5 +216,6 @@ namespace Jo.OfficeHelper
               };
             updater.StartUpdating();
         }
+
     }
 }

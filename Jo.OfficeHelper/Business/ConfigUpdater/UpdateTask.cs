@@ -164,8 +164,8 @@ namespace Jo.OfficeHelper.Business.ConfigUpdater
                         else
                         {
                             str = str.Substring(firstMatch.Index + firstMatch.Value.Length);
-                            
-                        }                        
+
+                        }
                         matchCollection = regex.Matches(str);
                     }
                     str = tmpStr;
@@ -176,14 +176,20 @@ namespace Jo.OfficeHelper.Business.ConfigUpdater
                 }
                 if (!string.IsNullOrWhiteSpace(RestartProcessName))
                 {
-                   List<string> list= GetCommandLines(RestartProcessName);
+                    List<CommandLineStruct> listCommandLines = GetCommandLines(RestartProcessName);
+                    //Kill Process
                     foreach (Process process in Process.GetProcessesByName(RestartProcessName))
                     {
-                        Process newProcess = new Process();
-                        newProcess.StartInfo = process.StartInfo;
                         process.Kill();
                         process.Close();
                         process.Dispose();
+                    }
+                    //Start Process
+                    foreach (CommandLineStruct commandLineStruct in listCommandLines)
+                    {
+                        Process newProcess = new Process();
+                        newProcess.StartInfo.FileName = commandLineStruct.ProgramPath;
+                        newProcess.StartInfo.Arguments = commandLineStruct.Args;
                         newProcess.Start();
                     }
                 }
@@ -219,22 +225,28 @@ namespace Jo.OfficeHelper.Business.ConfigUpdater
             };
             cmd.SendCommand($"sc stop {serviceName}");
             cmd.SendCommand($"sc start {serviceName}");
-            cmd.DisposeAndExit();
+
         }
 
-        private static List<string> GetCommandLines(string processName)
+        private static List<CommandLineStruct> GetCommandLines(string processName)
         {
-            List<string> results = new List<string>();
-            string wmiQuery = string.Format("PROCESS", processName);
-            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(wmiQuery))
+            List<CommandLineStruct> results = new List<CommandLineStruct>();
+            ManagementScope scope = new ManagementScope($@"\\{System.Configuration.ConfigurationManager.AppSettings["ComputerName"]}\root\CIMV2");
+            ObjectQuery query = new ObjectQuery($"SELECT * FROM Win32_Process where Name='{processName}.exe'");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
+
+            ManagementObjectCollection queryCollection = searcher.Get();
+            foreach (ManagementObject m in queryCollection)
             {
-                using (ManagementObjectCollection retObjectCollection = searcher.Get())
-                {
-                    foreach (ManagementObject retObject in retObjectCollection)
-                    {
-                        results.Add((string)retObject["CommandLine"]);
-                    }
-                }
+                CommandLineStruct commandLineStruct;
+                string strCommandLine = m["CommandLine"].ToString();
+                commandLineStruct.ProgramPath = strCommandLine.Substring(0, strCommandLine.IndexOf(" "));
+                commandLineStruct.Args = strCommandLine.Substring(strCommandLine.IndexOf(" "));
+                results.Add(commandLineStruct);
+                //foreach (var pro in m.Properties)
+                //{
+                //    Console.WriteLine(pro.Name+"    "+pro.Value);
+                //}
             }
             return results;
         }

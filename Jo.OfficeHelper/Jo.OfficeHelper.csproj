@@ -62,6 +62,7 @@
     <Compile Include="Business\ProcessHelper.cs" />
     <Compile Include="Business\ReleasableClass.cs" />
     <Compile Include="Business\ColorPickerBiz.cs" />
+    <Compile Include="DTO\CommandLineStruct.cs" />
     <Compile Include="DTO\ConfigUpdaterConfigDTO.cs" />
     <Compile Include="DTO\OfficeHelperConfigDTO.cs" />
     <Compile Include="DTO\ConfigUpdaterConfigCollection.cs" />
@@ -101,7 +102,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Icon.ico" />

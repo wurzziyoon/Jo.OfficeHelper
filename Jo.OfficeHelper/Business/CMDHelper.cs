@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 
 namespace Jo.OfficeHelper.Business
 {
-    public class CMDHelper
+    public class CMDHelper:IDisposable
     {
-        private static CMDHelper m_controllerObj;
+        private static CMDHelper m_obj;
         private Process m_cmdProcess;
-        private CMDHelper()
-        {
-            Init();
-        }
+
+
         private CMDHelper(string cmdPath)
         {
             Init(cmdPath);
@@ -74,10 +72,10 @@ namespace Jo.OfficeHelper.Business
                 m_onDisposed -= value;
             }
         }
-        private void Init(string cmdPath = null)
+        private void Init(string cmdPath)
         {
-            string filePath = cmdPath == null ? "cmd.exe" : cmdPath;
-            if (!File.Exists(cmdPath))
+            string filePath = string.IsNullOrWhiteSpace(cmdPath) ? @"c:\windows\system32\cmd.exe" : cmdPath;
+            if (!File.Exists(filePath))
             {
                 throw new Exception("Can not find cmd");
             }
@@ -108,7 +106,7 @@ namespace Jo.OfficeHelper.Business
                         }
                     };
                 m_cmdProcess.Disposed += (sender, e) => { if (m_onDisposed != null) m_onDisposed.Invoke(sender, e); };
-                SendCommand(" ");
+                //SendCommand(" ");
 
                 m_cmdProcess.EnableRaisingEvents = true;
                 m_cmdProcess.BeginErrorReadLine();
@@ -132,13 +130,19 @@ namespace Jo.OfficeHelper.Business
         {
             m_cmdProcess.StandardInput.WriteLine(" ");
         }
-        public static CMDHelper GetInstance()
+        public static CMDHelper GetInstance(string cmdPath=null)
         {
-            if (m_controllerObj == null)
+            if (m_obj == null)
             {
-                m_controllerObj = new CMDHelper();
+                m_obj = new CMDHelper(cmdPath);
             }
-            return m_controllerObj;
+            return m_obj;
+        }
+
+        public void Dispose()
+        {
+            m_obj.DisposeAndExit();
+            m_obj = null;
         }
     }
 }

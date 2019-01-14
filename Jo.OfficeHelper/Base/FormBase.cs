@@ -27,7 +27,6 @@ namespace Jo.OfficeHelper.Base
             this.m_from = frm;
             ReleaseEmbeddedResource("Jo.OfficeHelper.Resources.Icon.ico", Environment.CurrentDirectory + @"\Icon.ico");
             this.m_from.Icon = new System.Drawing.Icon(Environment.CurrentDirectory + @"\Icon.ico");
-
             //ReleaseEmbeddedResource("Jo.OfficeHelper.Resources.MaterialSkin.dll", Environment.CurrentDirectory + @"\MaterialSkin.dll");
             //m_materialSkinManager.AddFormToManage(this);
             //m_materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
